@@ -2,8 +2,8 @@ const {Op, TableHints} = require("sequelize");
 
 class ApiFeatures {
     // assign properties that need to use in method
-    constructor(query, queryString, model){
-        this.query = query;
+    constructor(queryString, model){
+        this.query = {};
         this.queryString = queryString;
         this.model = model;
     }
