@@ -14,3 +14,18 @@ exports.getAll = async (req, res, next) => {
     console.error(error.message);
   }
 };
+
+exports.addProduct = async (req, res, next) => {
+  try {
+    const newItem = await Products.create({
+      name: req.body.name,
+      price: req.body.price,
+    });
+    res.status(201).json({
+      status: "success",
+      data: {
+        newItem,
+      },
+    });
+  } catch (error) {}
+};

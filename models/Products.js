@@ -16,6 +16,21 @@ const Products = sequelize.define("Products", {
     type: DataTypes.DECIMAL,
     allowNull: false,
   },
+  description: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  stock: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+  },
+  categoryId: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: "Categories",
+      key: "id",
+    },
+  },
 });
 
 module.exports = Products;
