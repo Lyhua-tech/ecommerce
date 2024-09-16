@@ -13,6 +13,8 @@ const Categories = sequelize.define("Categories", {
     allowNull: false,
     unique: true,
   },
+}, {
+  timestamps: true,
 });
 
 module.exports = Categories;
