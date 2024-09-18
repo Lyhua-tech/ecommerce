@@ -1,5 +1,6 @@
 const sequelize = require("../config/databases");
 const { DataTypes } = require("sequelize");
+const bcrypt = require('bcryptjs')
 
 const Users = sequelize.define(
   "Users",
@@ -32,6 +33,13 @@ const Users = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    roleId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Roles',
+        key: 'id'
+      }
+    }
   },
   {
     timestamps: true
@@ -43,5 +51,13 @@ const Users = sequelize.define(
     },
   },
 );
+
+// Hash password before saving to the database
+Users.beforeSave = (async(user) => {
+  if(user.changed('password')) {
+    const salt = await bcrypt.genSalt(12);
+    user.password = await bcrypt.hash(user.password, salt)
+  }
+})
 
 module.exports = Users;
