@@ -10,8 +10,8 @@ Users.hasMany(Orders, { foreignKey: 'userId', onDelete: 'CASCADE', onUpdate: 'CA
 Orders.belongsTo(Users, { foreignKey: 'userId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
 // Users and Roles (RoleId as a reference key in Users)
-Users.belongsTo(Roles, { foreignKey: 'RoleId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
-Roles.hasMany(Users, { foreignKey: 'RoleId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+Users.belongsTo(Roles, { foreignKey: 'roleId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+Roles.hasMany(Users, { foreignKey: 'roleId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
 // Orders and OrderItems
 Orders.hasMany(OrderItems, { foreignKey: 'orderId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
