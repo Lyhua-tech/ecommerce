@@ -1,4 +1,5 @@
 const Users = require('../models/Users');
+const Role = require('../models/Roles')
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs')
 const { promisify } = require('util');
@@ -8,6 +9,8 @@ const signup = async(req, res) => {
     try {
         const user = await Users.create({email, username, password});
 
+        const role = await Role.findOne({where: {title: 'buyer'}})
+        await user.addRole(role)
         //send message
         res.status(201).json({
             status: 'sucess',
@@ -21,6 +24,25 @@ const signup = async(req, res) => {
             message: error.message,
         });
     }
+}
+
+const becomeSeller = async(req, res) => {
+  try {
+    const user = await Users.findByPk(req.user.id);
+    const sellerRole = await Role.findOne({where: {title: 'seller'}})
+
+    await user.addRole(sellerRole)
+
+    res.status(200).json({
+      status: 'success',
+      message: 'You are now a seller!',
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'fail',
+      message: error.message,
+    });
+  }
 }
 
 const login = async(req, res) => {
@@ -96,4 +118,4 @@ const protected = async(req, res) => {
   }
 }
 
-module.exports = {signup, login}
+module.exports = {signup, login, becomeSeller, protected}

@@ -12,7 +12,7 @@ const Roles = sequelize.define('Roles', {
         type: DataTypes.STRING,
         validate: {
             isIn: {
-                args: ['Seller', 'Buyer', 'Admin'],
+                args: [['seller', 'buyer', 'admin']],
                 msg: 'Roles must be only seller, buyer or admin'
             },
         }
