@@ -39,7 +39,9 @@ const Users = sequelize.define(
         model: 'Roles',
         key: 'id'
       }
-    }
+    },
+    verificationtoken: DataTypes.STRING,
+    verificationExpiration: DataTypes.DATE,
   },
   {
     timestamps: true
