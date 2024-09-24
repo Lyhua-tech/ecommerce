@@ -1,6 +1,6 @@
 const sequelize = require("../config/databases");
 const { DataTypes } = require("sequelize");
-const bcrypt = require('bcryptjs')
+const bcrypt = require("bcryptjs");
 
 const Users = sequelize.define(
   "Users",
@@ -33,18 +33,18 @@ const Users = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    roleId: {
+    userRole: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'Roles',
-        key: 'id'
-      }
+        model: "UserRoles",
+        key: "id",
+      },
     },
     verificationtoken: DataTypes.STRING,
     verificationExpiration: DataTypes.DATE,
   },
   {
-    timestamps: true
+    timestamps: true,
   },
   {
     indexes: {
@@ -55,11 +55,10 @@ const Users = sequelize.define(
 );
 
 Users.beforeSave(async (user) => {
-  if (user.changed('password')) {
+  if (user.changed("password")) {
     const salt = await bcrypt.genSalt(12);
     user.password = await bcrypt.hash(user.password, salt);
   }
 });
-
 
 module.exports = Users;
