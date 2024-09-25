@@ -33,13 +33,6 @@ const Users = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    userRole: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "UserRoles",
-        key: "id",
-      },
-    },
     verificationtoken: DataTypes.STRING,
     verificationExpiration: DataTypes.DATE,
   },
