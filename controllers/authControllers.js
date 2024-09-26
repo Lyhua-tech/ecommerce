@@ -48,7 +48,7 @@ const becomeSeller = async(req, res) => {
 const login = async(req, res) => {
     const {username, password} = req.body
     try {
-        const user = await Users.findOne({ where: { username } });
+        const user = await Users.findOne({ where: { username }, include: Role });
         if (!user) {
             return res.status(404).json({
                 status: 'fail',
@@ -64,8 +64,12 @@ const login = async(req, res) => {
                 message: 'Invalid Password or Username'
             })
         }
-         //generate jwt for sign in 
-         const token = jwt.sign({id: user.id, username:user.username}, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
+
+        //generate role 
+        const roles = await user.Roles.map((role) => role.title)
+        
+        //generate jwt for sign in 
+        const token = jwt.sign({id: user.id, username:user.username, roles}, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
         res.status(200).json({
             status: 'success',
             token,
@@ -118,4 +122,16 @@ const protected = async(req, res) => {
   }
 }
 
-module.exports = {signup, login, becomeSeller, protected}
+const restrictRole = async(...roles) => {
+  return (req, res, next) => {
+    if(!roles.include(req.res.role)) {
+      res.status(401).json({
+        status: 'fail',
+        message: 'Access denied: insufficient role permissions'
+      })
+    }
+    next()
+  }
+}
+
+module.exports = {signup, login, becomeSeller, protected,restrictRole}
