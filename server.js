@@ -4,7 +4,7 @@ const morgan = require("morgan");
 const dotenv = require("dotenv");
 const model = require("./models/index");
 
-dotenv.config({ path: `${process.cwd()}.env` });
+dotenv.config({ path: `${process.cwd()}/.env` });
 
 const syncDb = async () => {
   try {

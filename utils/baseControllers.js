@@ -5,6 +5,7 @@ const baseController = (model, associate) => {
 
       res.status(200).json({
         status: "success",
+        total: result.length,
         data: { result },
       });
     } catch (error) {
