@@ -3,9 +3,9 @@ const { Op } = require("sequelize");
 const apiFeatures = (queryString, model) => {
   const query = {};
   const queryObj = { ...queryString };
-  const excludeFields = ['page', 'sort', 'fields', 'limit'];
+  const excludeFields = ["page", "sort", "fields", "limit"];
 
-  excludeFields.forEach(element => {
+  excludeFields.forEach((element) => {
     delete queryObj[element];
   });
 
@@ -15,7 +15,7 @@ const apiFeatures = (queryString, model) => {
     for (const field in queryObj) {
       const value = queryObj[field];
 
-      if (typeof value === 'object') {
+      if (typeof value === "object") {
         if (value.gte) filters[field] = { [Op.gte]: value.gte };
         if (value.gt) filters[field] = { [Op.gt]: value.gt };
         if (value.lte) filters[field] = { [Op.lte]: value.lte };
@@ -31,10 +31,10 @@ const apiFeatures = (queryString, model) => {
 
   const sorting = () => {
     if (queryString.sort) {
-      const sortBy = queryString.sort.split(',').map(el => {
+      const sortBy = queryString.sort.split(",").map((el) => {
         let field = el;
         let order = "ASC";
-        if (el.startsWith('-')) {
+        if (el.startsWith("-")) {
           field = el.slice(1);
           order = "DESC";
         }
@@ -67,7 +67,7 @@ const apiFeatures = (queryString, model) => {
     return apiFeatures(queryString, model); // Return for method chaining
   };
 
-  const execute = async(options= {}) => {
+  const execute = async (options = {}) => {
     try {
       return await model.findAll({ ...query, ...options }); // Execute Sequelize findAll with constructed query options
     } catch (error) {

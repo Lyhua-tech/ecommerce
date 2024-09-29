@@ -1,31 +1,7 @@
 const Products = require("../models/Products");
+const Categories = require("../models/Categories");
+const baseController = require("../utils/baseControllers");
 
-exports.getAll = async (req, res, next) => {
-  try {
-    const products = await Products.findAll();
+const productController = baseController(Products, Categories);
 
-    res.status(200).json({
-      status: "success",
-      data: {
-        products,
-      },
-    });
-  } catch (error) {
-    console.error(error.message);
-  }
-};
-
-exports.addProduct = async (req, res, next) => {
-  try {
-    const newItem = await Products.create({
-      name: req.body.name,
-      price: req.body.price,
-    });
-    res.status(201).json({
-      status: "success",
-      data: {
-        newItem,
-      },
-    });
-  } catch (error) {}
-};
+module.exports = productController;

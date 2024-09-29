@@ -1,16 +1,16 @@
 const roleData = [
   {
     id: 1,
-    title: "admin"
+    title: "admin",
   },
   {
     id: 2,
-    title: "buyer"
+    title: "buyer",
   },
   {
     id: 3,
-    title: "seller"
-  }
+    title: "seller",
+  },
 ];
 
-module.exports = roleData; 
+module.exports = roleData;
